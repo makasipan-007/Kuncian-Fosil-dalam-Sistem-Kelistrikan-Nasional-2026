@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dominasi Fosil Sistem Kelistrikan 2026</title>
+    
+    <!-- Tailwind CSS untuk tata letak -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js untuk visualisasi data interaktif -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Tipografi Typewriter -->
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'dark-forest': '#0a1610',
+                        'mongabay-green': '#2e8540',
+                        'fossil-coal': '#27272a',
+                        'fossil-gas': '#3f3f46',
+                        'fossil-oil': '#52525b'
+                    },
+                    fontFamily: {
+                        'mono': ['"Courier Prime"', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Courier Prime', monospace; }
+    </style>
+</head>
+<body class="bg-dark-forest text-gray-200 min-h-screen flex items-center justify-center p-4 md:p-8">
+
+    <div class="w-full max-w-4xl bg-black/60 p-6 md:p-8 rounded-xl border border-gray-800 shadow-2xl">
+        <h2 class="text-xl md:text-2xl font-bold mb-2 text-gray-100">Kuncian Fosil dalam Sistem Kelistrikan Nasional</h2>
+        <p class="text-sm text-gray-400 mb-6 border-b border-gray-800 pb-4">
+            Estimasi daya rata-rata (Gigawatt) berdasarkan total produksi kuartal I 2026.
+        </p>
+        
+        <!-- Wadah Canvas untuk Chart.js -->
+        <div class="relative h-80 w-full">
+            <canvas id="bauranChart"></canvas>
+        </div>
+        
+        <p class="text-xs text-gray-600 mt-6">
+            Sumber Data: Direktorat Jenderal Ketenagalistrikan Kementerian ESDM (Juni 2026)
+        </p>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('bauranChart').getContext('2d');
+        
+        // Konfigurasi default Chart.js untuk menyesuaikan estetika dark-mode & font typewriter
+        Chart.defaults.font.family = '"Courier Prime", monospace';
+        Chart.defaults.color = '#9ca3af'; 
+        
+        new Chart(ctx, {
+            type: 'bar', // Menggunakan bar horizontal (indexAxis: 'y')
+            data: {
+                labels: ['Batu Bara', 'Gas Bumi', 'BBM', 'Energi Bersih (EBT)'],
+                datasets: [{
+                    label: 'Estimasi Daya (GW)',
+                    data: [37.28, 7.97, 1.94, 10.28],
+                    backgroundColor: [
+                        '#27272a', // fossil-coal (gelap pekat)
+                        '#3f3f46', // fossil-gas (abu-abu gelap)
+                        '#52525b', // fossil-oil (abu-abu medium)
+                        '#2e8540'  // mongabay-green (hijau kontras)
+                    ],
+                    borderColor: '#18181b', 
+                    borderWidth: 2,
+                    borderRadius: 4,
+                    barThickness: 32
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y', 
+                plugins: {
+                    legend: {
+                        display: false 
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.85)',
+                        titleColor: '#e5e7eb',
+                        titleFont: { size: 14, weight: 'bold' },
+                        bodyFont: { size: 13 },
+                        padding: 12,
+                        borderColor: '#2e8540',
+                        borderWidth: 1,
+                        callbacks: {
+                            label: function(context) {
+                                const value = context.parsed.x;
+                                // Menautkan nilai porsi persentase ke dalam tooltip
+                                const percentages = {
+                                    'Batu Bara': 64.87,
+                                    'Gas Bumi': 13.86,
+                                    'BBM': 3.38,
+                                    'Energi Bersih (EBT)': 17.89
+                                };
+                                const pct = percentages[context.label];
+                                return ` Daya Mengalir: ${value} GW (${pct}%)`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.05)',
+                            drawBorder: false
+                        },
+                        title: {
+                            display: true,
+                            text: 'Gigawatt (GW)',
+                            color: '#6b7280'
+                        }
+                    },
+                    y: {
+                        grid: {
+                            display: false,
+                            drawBorder: false
+                        },
+                        ticks: {
+                            color: '#d1d5db',
+                            font: {
+                                size: 14,
+                                weight: 'bold'
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
